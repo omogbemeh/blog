@@ -5,7 +5,18 @@ const User = require('../../models/User');
 const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
-const auth = require('../../middleware/auth')
+const auth = require('../../middleware/auth');
+const { default: Axios } = require('axios');
+
+router.get('/', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user)
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send('Server Error')
+    }
+})
 
 // login route
 router.post('/', [ 
@@ -43,8 +54,6 @@ router.post('/', [
                res.json({ token })
                 }
             )
-        
-
         
     } catch (err) {
         console.log(err.message);
