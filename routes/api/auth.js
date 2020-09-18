@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
-const { default: Axios } = require('axios');
 
 router.get('/', auth, async (req, res) => {
     try {

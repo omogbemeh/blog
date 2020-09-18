@@ -32,7 +32,7 @@ router.post('/',[ auth, [
         console.log(err);
         res.status(500).json('Server Error')
     }
-})
+});
 
 // Get all posts
 router.get('/', async (req, res) => {
@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
         console.log(err.message);
         res.status(500).json('Server Error')
     }
-})
+});
 
 // Get a particular Post
 router.get('/:postId', async (req, res) => {
@@ -56,17 +56,29 @@ router.get('/:postId', async (req, res) => {
     }
 });
 
+// Get all posts by a single user
+router.get('/:userId/posts', async (req, res) => {
+    try {
+        const posts = Posts.find({ user: req.params.userId })
+        res.json(posts);
+    } catch (err) {
+        console.log(err.message);
+    }
+});
+
 // Like a post
 router.put('/:postId/like', auth, async (req, res) => {
     const post = await Post.findById(req.params.id);
-    const user = await User.findById(req.user.id);
-    if ( post.likes.map(like => like.user.toSring() === user) > 0 ) {
+    if ( post.likes.filter(like => like.user.toSring() === req.user.id) > 0 ) {
         return res.status(400).json({ msg: 'Post already liked' })
     }
-    post.likes.unshift({ user })
+    // if(post.likes.filter(like => like.user.toString() === user).length === 0) {
+    //     res.status(400).json({ msg: 'Post has not been liked by you' })
+    // }
+    post.likes.unshift({ user: req.user.id })
     await post.save()
     res.json(post.likes)
-})
+});
 
 // Unlike A post
 router.put('/:postId/unlike', auth, async (req, res) => {
@@ -84,7 +96,7 @@ router.put('/:postId/unlike', auth, async (req, res) => {
         console.log(err.message);
         res.status(500).json('Server Error')
     }
-})
+});
 
 // Comment on a Post 
 router.put('/:postId/comment', [ auth, [

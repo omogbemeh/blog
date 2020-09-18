@@ -1,4 +1,4 @@
-import { REGISTER_SUCCESS, REGISTER_ERROR, USER_LOADED, LOGIN_SUCCESS, LOGIN_ERROR } from '../actions/constants'
+import { REGISTER_SUCCESS, REGISTER_ERROR, USER_LOADED, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT } from '../actions/constants'
 
 const initialState = {
     loading: true,
@@ -27,6 +27,7 @@ export const auth = (state = initialState, action) => {
                 loading: false,
                 isAuthenticated: true
             }
+        case LOGOUT:
         case LOGIN_ERROR:
         case REGISTER_ERROR:
             localStorage.removeItem('token')

@@ -167,18 +167,21 @@ i {
     color: black;
     margin-bottom: 1rem;
     font-weight: 700;
+    font-size: 1.6rem;
 }
 
 .post-item p {
     margin-bottom: 1rem;
-    font-weight: 200;
+    font-weight: 100;
     color: var(--dark);
+    font-size: .9rem;
 }
 
 .post-info {
     display: flex;
     font-size: .8rem;
     justify-content: space-between;
+    color: var(--purple);
 }
 
 .post-author {
@@ -235,6 +238,7 @@ i {
     border: 1px solid #000;
     padding: .5rem;
     outline: none;
+    cursor: pointer;
 }
 
 .btn:focus,
@@ -274,6 +278,9 @@ i {
 
 .trending-intro {
     margin-bottom: 1rem;
+    background-color: var(--blue);
+    text-align: center;
+    font-weight: 200;
 }
 
 
@@ -310,6 +317,20 @@ i {
 
 .single-post p {
     font-weight: 200;
+}
+
+
+/*************/
+
+
+/*Single Profile*/
+
+
+/*************/
+
+.profile {
+    padding: 1rem 0;
+    display: flex;
 }
 
 @media screen and (min-width: 900px) {

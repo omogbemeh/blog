@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import { logOut } from '../../actions/auth';
 
-const Navbar = ({ auth: { loading, isAuthenticated } }) => {
+const Navbar = ({ logOut, auth: { loading, isAuthenticated } }) => {
     const [hideMenu, toggleHideMenu] = useState(false)
     return (
         <header >
@@ -18,8 +19,8 @@ const Navbar = ({ auth: { loading, isAuthenticated } }) => {
                             <li onClick={e => toggleHideMenu(!hideMenu)} className='nav-link'>About</li>
                             <li onClick={e => toggleHideMenu(!hideMenu)} className='nav-link'>Poets</li>
                             <li onClick={e => toggleHideMenu(!hideMenu)} className='nav-link'>Contact</li>
-                            <Link to='/login'><li className='nav-link'>Login</li></Link>
-                            <Link to='/register'><li className='nav-link'>Register</li></Link>
+                            { !loading && isAuthenticated ? <Link to='/login'><li onClick={e => { logOut(); toggleHideMenu(!hideMenu)}} className='nav-link'>logout</li></Link>: <Link to='/login'><li onClick={e => toggleHideMenu(!hideMenu)} className='nav-link'>Login</li></Link>}
+                            { !loading && !isAuthenticated && <Link to='/register'><li onClick={e => toggleHideMenu(!hideMenu)} className='nav-link'>Register</li></Link>}
                         </ul>
                 </nav>
             </div>
@@ -29,10 +30,11 @@ const Navbar = ({ auth: { loading, isAuthenticated } }) => {
 
 Navbar.propTypes = {
     auth: PropTypes.object.isRequired,
+    logOut: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
 });
 
-export default connect(mapStateToProps)(Navbar)
+export default connect(mapStateToProps, { logOut })(Navbar)

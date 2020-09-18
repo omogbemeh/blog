@@ -13,7 +13,6 @@ import Profile from './components/profile/Profile';
 import { loadUser } from './actions/auth';
 import MakePost from './components/makePost/MakePost';
 
-
 if (localStorage.getItem('token')) {
   setAuthToken(localStorage.getItem('token'))
 }
@@ -37,6 +36,7 @@ const App = () => {
           <Route exact path='/profile/me' component={Profile} />
           <Route exact path='/make-post' component={MakePost} />
           <Route exact path='/posts/:postId' component={Post} />
+          <Route exact path='/profile/:profileId' component={Profile} />
       </Switch> 
       </div>
       </Router>

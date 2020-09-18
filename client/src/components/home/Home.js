@@ -5,8 +5,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import AddPoem from './AddPoem';
 import Trending from './Trending';
+import { likePost } from '../../actions/posts';
 
-const Home = ({ getPosts, posts: { loading, posts }, auth }) => {
+const Home = ({ likePost, getPosts, posts: { loading, posts }, auth }) => {
     useEffect(() => {
         getPosts()
     }, [getPosts])
@@ -27,14 +28,10 @@ const Home = ({ getPosts, posts: { loading, posts }, auth }) => {
                                         <Link style={{ textDecoration: 'none' }} to={`/posts/${post._id}`}><h3>{post.title}</h3></Link>
                                         <Link style={{ textDecoration: 'none' }} to={`/posts/${post._id}`}><p>{post.content.slice(0,50)}</p></Link>
                                         <div className='post-info'>
-                                            <small >by:{' '}<em className='post-author'> {post.name} </em></small>
+                                            <small >by:{' '}<Link to={`/profile/${post.user}`}><em className='post-author'> {post.name} </em></Link></small>
                                             <small className='post-date' >{post.date.slice(0,10)}</small>
                                         </div> 
-                                        <div className='like-comment'>
-                                            <button><i class="far fa-heart like"></i><span>{post.likes.length}</span></button>
-                                            <button><i class="far fa-comments comment"></i><span>{post.comments.length}</span></button>
-                                            { !auth.loading && post.user === auth.user._id && <button><i class="far fa-trash-alt"></i></button> }
-                                        </div>  
+                                        
                                     </div>
                                  
                             ))
@@ -50,6 +47,7 @@ Home.propTypes = {
     getPosts: PropTypes.func.isRequired,
     posts: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
+    likePost: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -57,4 +55,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { getPosts })(Home)
+export default connect(mapStateToProps, { getPosts, likePost })(Home)

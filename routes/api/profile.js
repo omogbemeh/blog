@@ -4,6 +4,16 @@ const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const auth = require('../../middleware/auth')
 
+// Get a user
+router.get('/:user', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.user).select('-password')
+        res.json(user)
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json('Server Error')
+    }
+})
 // Create a profile
 router.post('/', auth, async (req, res) => {
     const { 

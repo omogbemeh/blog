@@ -1,9 +1,9 @@
 import { GET_USER, USER_ERROR } from './constants'
 import axios from 'axios';
 
-export const getUser = () => async dispatch => {
+export const getUser = userId => async dispatch => {
     try {
-        const res = await axios.get('/api/users')
+        const res = await axios.get(`/api/profile/${userId}`)
         dispatch({
             type: GET_USER,
             payload: res.data

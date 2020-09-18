@@ -30,6 +30,10 @@ const Post = ({ getPost, posts: { loading, post }, match }) => {
                         <p>{post.content}</p>
                     </div>
                     <hr/>
+                    <div className='like-comment'>
+                        <button><i className="far fa-heart like"></i><span>{post.likes.length}</span></button>
+                        <button><i className="far fa-comments comment"></i><span>{post.comments.length}</span></button>
+                    </div>  
                     
                 </div>
             </section>

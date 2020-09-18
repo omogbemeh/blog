@@ -1,4 +1,4 @@
-import { REGISTER_SUCCESS, REGISTER_ERROR, USER_LOADED, LOGIN_SUCCESS, LOGIN_ERROR } from './constants';
+import { REGISTER_SUCCESS, REGISTER_ERROR, USER_LOADED, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT } from './constants';
 import axios from 'axios';
 import setAuthToken from'../utils/setAuthToken';
 
@@ -57,5 +57,15 @@ export const loginUser = formData => async dispatch => {
         dispatch({
             type: LOGIN_ERROR
         })
+    }
+}
+
+export const logOut = () => async dispatch => {
+    try {
+        dispatch({
+            type: LOGOUT
+        })
+    } catch (err) {
+        console.log(err.message);
     }
 }
